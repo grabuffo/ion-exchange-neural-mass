@@ -53,17 +53,19 @@ pops = cached_parallel(jobs, workers=args.workers, use_cache=not args.no_cache)
 # ---------------------------------------------------------------- panel a
 sa = pops[f"fig3_pop_N{N}_T{DUR:g}_K15.5_full"]
 V = sa["V"]                                     # (N, time) sampled at 1 ms
-t = sa["t"] / 1000
+nwin = int(min(9000, V.shape[1] * 0.75))         # last 9 s, as in the original figure
+V = V[:, -nwin:]
+t = sa["t"][-nwin:] / 1000
 spikes = V > 0
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(4.0, 1.6), gridspec_kw=dict(width_ratios=[2, 1]))
-ii, jj = np.nonzero(spikes[:, ::1])
-ax1.plot(t[jj], ii, ".", color="k", ms=0.3, rasterized=True)
+ax1.imshow(spikes, aspect="auto", interpolation="none", cmap="gray_r",
+           extent=[t[0], t[-1], 0, V.shape[0]], origin="lower")
 ax1.set_xlabel("Time (s)"); ax1.set_ylabel("Neuron ID"); ax1.set_title("Neurons rasterplot")
-# instant with the highest number of spiking neurons = inside a seizure-like event
-tsz = int(np.argmax(spikes.sum(0)))
-# a quiet instant: last sample with no spikes before tsz
-quiet = np.nonzero(spikes[:, :tsz].sum(0) == 0)[0]
-tq = quiet[-1] if len(quiet) else 0
+# instants for the histograms: inside a seizure-like event (most spiking
+# neurons) and the last quiet sample (no spikes) before it
+nsp = spikes.sum(0)
+tsz = int(np.argmax(nsp))
+tq = int(np.argmin(V.mean(0)))        # inter-event hyperpolarized instant
 ax1.axvline(t[tq], color="tab:blue", ls="--", lw=0.6)
 ax1.axvline(t[tsz], color="tomato", ls="--", lw=0.6)
 ax2.hist(V[:, tq], 40, color="tab:blue", alpha=0.9)

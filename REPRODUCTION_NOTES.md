@@ -73,6 +73,10 @@ z0 = (V, n, DKi, Kg) = (-15, 0.45, -3.5, -12), the notebook value).
    files in `data/in_vitro/` (see its README).
 7. **Fig. 5** is a numerical-continuation result and is not reproduced by
    simulation here (see `continuation/README.md`).
-8. **Fig. 6** uses the same 6-node connectivity as the original run
+8. **Fig. 2-figure supplement 1a** is drawn from the same N = 3000,
+   [K+]bath = 15.5 population as Fig. 3a (as in the original notebook
+   `Fig3-population-emergent.ipynb`); the histogram instant is the one with
+   the largest across-neuron variance of V inside a 3 s window.
+9. **Fig. 6** uses the same 6-node connectivity as the original run
    (`data/connectivity/6x6full.zip`, TVB format). The random weights of
    panel (a) are those of the file, not re-drawn.
