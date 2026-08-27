@@ -1,11 +1,19 @@
 """Network of mean-field nodes coupled through a structural connectome (Fig. 6).
 
 This is a plain-numpy port of the TVB model class ``InfiniteHH`` used for the
-paper (``notebooks_original/Jan/model_HH_ABH.py``): identical equations,
-4th-order Runge-Kutta, instantaneous coupling (conduction speed = inf).
+paper (``notebooks_original/tvb_model/model_HH_ABH.py``): 4th-order
+Runge-Kutta, instantaneous coupling (conduction speed = inf).
 
 Node i receives the coupling term  (R_minus/pi) * G * sum_j W_ij x_j * (E - V_i)
-added to dV_i/dt (TVB "Scaling" coupling on the state variable x).
+added to dV_i/dt (TVB "Scaling" coupling on the state variable x, hence the
+R_minus/pi factor that converts x into the rate r).
+
+NOTE: the original TVB class omitted the *local* recurrent term J r (E - V)
+of Eq. 25 in dV/dt (it kept -J r x in dx/dt); because W has a zero diagonal
+that term is not supplied by the connectome coupling either. It is included
+here, as in the paper's equations. For the parameters of Fig. 6 (J = 0.08)
+the difference is negligible (identical burst counts per node); set
+``local_term=False`` to reproduce the original behaviour exactly.
 """
 from __future__ import annotations
 
@@ -15,7 +23,7 @@ from . import params as P
 from .single_neuron import currents, n_inf
 
 
-def dfun(state, W, G, K_bath, J, eta, Delta, coef, par, E=0.0):
+def dfun(state, W, G, K_bath, J, eta, Delta, coef, par, E=0.0, local_term=True):
     x, V, n, DKi, Kg = state
     I_Na, I_K, I_Cl, I_pump = currents(V, n, DKi, Kg, par)
     K_o = P.concentrations(DKi, Kg, par)[3]
@@ -30,6 +38,8 @@ def dfun(state, W, G, K_bath, J, eta, Delta, coef, par, E=0.0):
     d = np.empty_like(state)
     d[0] = Delta + 2.0 * R * (V - c) * x - J * r * x
     d[1] = Vdot - R * x ** 2 + eta + (coef["R_minus"] / np.pi) * coupling * (E - V)
+    if local_term:
+        d[1] += J * r * (E - V)
     d[2] = (n_inf(V, par) - n) / par["tau_n"]
     d[3] = -(par["gamma"] / par["w_i"]) * (I_K - 2.0 * I_pump)
     d[4] = par["epsilon"] * (K_bath - K_o)
@@ -38,7 +48,7 @@ def dfun(state, W, G, K_bath, J, eta, Delta, coef, par, E=0.0):
 
 def simulate(W, G, K_bath, J=0.08, eta=0.0, Delta=1.0, E=0.0, coef=None,
              par=None, z0=(0.1, -15.0, 0.45, -5.0, -16.0), duration_ms=20_000.0,
-             dt_ms=0.1, record_every=1):
+             dt_ms=0.1, record_every=1, local_term=True):
     """RK4 integration of ``len(W)`` coupled nodes.
 
     ``K_bath`` may be a scalar or one value per node. Returns dict with
@@ -49,7 +59,7 @@ def simulate(W, G, K_bath, J=0.08, eta=0.0, Delta=1.0, E=0.0, coef=None,
     W = np.asarray(W, float)
     N = len(W)
     K_bath = np.broadcast_to(np.asarray(K_bath, float), (N,)).copy()
-    args = (W, G, K_bath, J, eta, Delta, coef, par, E)
+    args = (W, G, K_bath, J, eta, Delta, coef, par, E, local_term)
 
     nsteps = int(round(duration_ms / dt_ms))
     state = np.tile(np.asarray(z0, float)[:, None], (1, N))

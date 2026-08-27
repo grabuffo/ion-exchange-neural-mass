@@ -80,3 +80,12 @@ z0 = (V, n, DKi, Kg) = (-15, 0.45, -3.5, -12), the notebook value).
 9. **Fig. 6** uses the same 6-node connectivity as the original run
    (`data/connectivity/6x6full.zip`, TVB format). The random weights of
    panel (a) are those of the file, not re-drawn.
+10. **Local recurrent term in the TVB network model.** The TVB class used for
+    Fig. 6 (`notebooks_original/tvb_model/model_HH_ABH.py`) omits the local
+    term J r (E - V) of Eq. 25 in dV/dt (it keeps -J r x in dx/dt), and the
+    connectome coupling cannot supply it because W has a zero diagonal.
+    `ionmf.network` includes the term (`local_term=True`, default) and
+    `model_HH_ABH_corrected.py` is the fixed TVB class. Re-running Fig. 6
+    with and without the term gives the same burst counts per node and the
+    same mean rates/voltages to the first decimal (J = 0.08 makes the term
+    ~1e-3 mV/ms), so the published figure is unaffected.
