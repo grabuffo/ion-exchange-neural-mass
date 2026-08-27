@@ -1,7 +1,7 @@
 """Network of mean-field nodes coupled through a structural connectome (Fig. 6).
 
 This is a plain-numpy port of the TVB model class ``InfiniteHH`` used for the
-paper (``notebooks_original/tvb_model/model_HH_ABH.py``): 4th-order
+paper (``tvb/model_HH_ABH.py``): 4th-order
 Runge-Kutta, instantaneous coupling (conduction speed = inf).
 
 Node i receives the coupling term  (R_minus/pi) * G * sum_j W_ij x_j * (E - V_i)

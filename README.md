@@ -29,7 +29,7 @@ figures/               output of the scripts (pdf + png)
 data/connectivity/     6-node connectome used in Fig. 6
 data/in_vitro/         in vitro LFP + [K+]ext recordings of Fig. 4c-d (csv)
 continuation/          numerical-continuation files behind Fig. 5
-notebooks_original/    the original analysis notebooks, unmodified (provenance)
+tvb/                   the model as a TVB Model class (used for Fig. 6)
 REPRODUCTION_NOTES.md  what was re-implemented, parameter sources, known differences
 ```
 

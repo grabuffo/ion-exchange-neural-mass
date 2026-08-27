@@ -1,10 +1,11 @@
 # Reproduction notes
 
 This repository was assembled after publication from the authors' working
-notebooks (`notebooks_original/`). Those notebooks depend on hard-coded local
+notebooks. Those notebooks depend on hard-coded local
 and cluster paths, intermediate pickles that were not preserved, and an old
 software stack, so the models and analyses were **re-implemented** in the
-`ionmf` package and the `scripts/`. This file records what was checked, where
+`ionmf` package and the `scripts/` (the notebooks themselves are not
+distributed). This file records what was checked, where
 each parameter comes from, and the places where the new code differs from the
 original one.
 
@@ -13,7 +14,7 @@ original one.
 * `single_neuron.py`, `population.py` (Brian2 equation string) and
   `mean_field.py` are line-by-line transcriptions of the equations in the
   notebooks; `network.py` is a NumPy port of the TVB model class
-  `notebooks_original/tvb_model/model_HH_ABH.py` (4th-order Runge-Kutta,
+  `tvb/model_HH_ABH.py` (4th-order Runge-Kutta,
   dt = 0.1 ms, instantaneous coupling, state bound x >= 0, as in the
   original run).
 * Membrane parameters are those of Table 1 of the paper, identical in every
@@ -74,18 +75,17 @@ z0 = (V, n, DKi, Kg) = (-15, 0.45, -3.5, -12), the notebook value).
 7. **Fig. 5** is a numerical-continuation result and is not reproduced by
    simulation here (see `continuation/README.md`).
 8. **Fig. 2-figure supplement 1a** is drawn from the same N = 3000,
-   [K+]bath = 15.5 population as Fig. 3a (as in the original notebook
-   `Fig3-population-emergent.ipynb`); the histogram instant is the one with
+   [K+]bath = 15.5 population as Fig. 3a (as in the original analysis); the histogram instant is the one with
    the largest across-neuron variance of V inside a 3 s window.
 9. **Fig. 6** uses the same 6-node connectivity as the original run
    (`data/connectivity/6x6full.zip`, TVB format). The random weights of
    panel (a) are those of the file, not re-drawn.
 10. **Local recurrent term in the TVB network model.** The TVB class used for
-    Fig. 6 (`notebooks_original/tvb_model/model_HH_ABH.py`) omits the local
+    Fig. 6 (`tvb/model_HH_ABH.py`) omits the local
     term J r (E - V) of Eq. 25 in dV/dt (it keeps -J r x in dx/dt), and the
     connectome coupling cannot supply it because W has a zero diagonal.
     `ionmf.network` includes the term (`local_term=True`, default) and
-    `model_HH_ABH_corrected.py` is the fixed TVB class. Re-running Fig. 6
+    `tvb/model_HH_ABH.py` is the fixed TVB class. Re-running Fig. 6
     with and without the term gives the same burst counts per node and the
     same mean rates/voltages to the first decimal (J = 0.08 makes the term
     ~1e-3 mV/ms), so the published figure is unaffected.

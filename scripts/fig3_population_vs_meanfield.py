@@ -28,7 +28,7 @@ args = p.parse_args()
 N, DUR = (args.N, args.duration) if not args.quick else (300, 6_000.0)
 Z0 = (-15.0, 0.45, -3.5, -12.0)
 
-# [K+]_bath -> [K+]_bath^eff (Fig. 3c), from the original analysis notebook
+# [K+]_bath -> [K+]_bath^eff (Fig. 3c), from the original analysis
 KEFF = {
     1.0: dict(zip([3.5, 5.5, 7.5, 9.5, 11.5, 13.5, 15.5, 17.5, 19.5, 21.5, 23.5, 25.5, 27.5],
                   [3.5, 5.5, 8.9, 9.6, 11.1, 13.5, 15.1, 17.5, 19.5, 19.7, 19.7, 22.5, 23.8])),
