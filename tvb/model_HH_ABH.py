@@ -29,7 +29,7 @@
 """
    A family of mean field models of infinite populations of all-to-all coupled
    quadratic integrate and fire neurons (theta-neurons).
-.. moduleauthor:: Giovanni Rabuffo <giovanni.rabuffo@univ-amu.fr>
+.. moduleauthor:: Giovanni Rabuffo <giovanni.rabuffo@upf.edu>
 """
 
 from tvb.simulator.models.base import Model

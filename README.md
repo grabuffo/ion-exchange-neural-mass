@@ -44,7 +44,7 @@ and will be added here:
   (`continuation/`).
 
 Until then, they are available on request from the corresponding author,
-Giovanni Rabuffo (giovanni.rabuffo@univ-amu.fr).
+Giovanni Rabuffo (giovanni.rabuffo@upf.edu).
 
 ## Installation
 

@@ -13,4 +13,4 @@ The traces are distributed here as plain csv files, one per recording:
 
 **Status:** the recordings are not yet in this folder; they are being
 collected and will be added. Until then they are available on request from
-the corresponding author, Giovanni Rabuffo (giovanni.rabuffo@univ-amu.fr).
+the corresponding author, Giovanni Rabuffo (giovanni.rabuffo@upf.edu).
