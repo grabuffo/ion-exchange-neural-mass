@@ -71,9 +71,11 @@ z0 = (V, n, DKi, Kg) = (-15, 0.45, -3.5, -12), the notebook value).
    Because the excitabilities eta_i are random, traces differ from the
    published ones in detail but not in regime.
 6. **Fig. 4c-d** are experimental recordings; the plotting code expects csv
-   files in `data/in_vitro/` (see its README).
+   files in `data/in_vitro/` (see its README); until the files are added they
+   are available on request from the corresponding author.
 7. **Fig. 5** is a numerical-continuation result and is not reproduced by
-   simulation here (see `continuation/README.md`).
+   simulation here (see `continuation/README.md`); the continuation files are
+   available on request until they are added.
 8. **Fig. 2-figure supplement 1a** is drawn from the same N = 3000,
    [K+]bath = 15.5 population as Fig. 3a (as in the original analysis); the histogram instant is the one with
    the largest across-neuron variance of V inside a 3 s window.

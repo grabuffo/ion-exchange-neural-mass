@@ -27,11 +27,24 @@ ionmf/                 the models
 scripts/               one script per figure (see table below)
 figures/               output of the scripts (pdf + png)
 data/connectivity/     6-node connectome used in Fig. 6
-data/in_vitro/         in vitro LFP + [K+]ext recordings of Fig. 4c-d (csv)
-continuation/          numerical-continuation files behind Fig. 5
+data/in_vitro/         in vitro LFP + [K+]ext recordings of Fig. 4c-d (csv; being added, see below)
+continuation/          numerical-continuation files behind Fig. 5 (being added, see below)
 tvb/                   the model as a TVB Model class (used for Fig. 6)
 REPRODUCTION_NOTES.md  what was re-implemented, parameter sources, known differences
 ```
+
+## Data availability (in progress)
+
+Everything needed to re-simulate the model panels is in this repository. Two
+sets of files are still being collected from the co-authors who produced them
+and will be added here:
+
+* the in vitro LFP and [K+]ext recordings shown in Fig. 4c-d (`data/in_vitro/`);
+* the numerical-continuation files behind the bifurcation diagram of Fig. 5
+  (`continuation/`).
+
+Until then, they are available on request from the corresponding author,
+Giovanni Rabuffo (giovanni.rabuffo@univ-amu.fr).
 
 ## Installation
 
